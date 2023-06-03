@@ -6,6 +6,8 @@ This library provides an analogWrite function polyfill for ESP32 Arduino framewo
 
 Licensed under the MIT license.
 
+This is heavily based on library https://github.com/erropix/ESP32_AnalogWrite/tree/master#usage
+
 Usage
 The library will do all the timer setup and channel selection work behind the scene so you don't have to worry about that.
 
