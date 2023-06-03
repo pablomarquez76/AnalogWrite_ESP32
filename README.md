@@ -9,13 +9,17 @@ Licensed under the MIT license.
 This is heavily based on library https://github.com/erropix/ESP32_AnalogWrite/tree/master#usage
 
 Usage
+
 The library will do all the timer setup and channel selection work behind the scene so you don't have to worry about that.
 
 Fade Example
+
 #include <Arduino.h>
+
 #include <analogWrite.h>
 
 int step = 1;
+
 int brightness = 0;
 
 void setup() {
