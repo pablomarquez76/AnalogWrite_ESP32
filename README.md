@@ -1,14 +1,14 @@
 # AnalogWrite
 This library provides an analogWrite function qand Servo support for ESP32
 
-About
+## About
 This library provides an analogWrite function polyfill for ESP32 Arduino framework by wrapping the ledc library.
 
 Licensed under the MIT license.
 
 This is heavily based on library https://github.com/erropix/ESP32_AnalogWrite/tree/master#usage
 
-Usage
+## Usage
 
 The library will do all the timer setup and channel selection work behind the scene so you don't have to worry about that.
 
@@ -35,7 +35,8 @@ void loop() {
   
   delay(10);
 }
-Default Value Range
+
+## Default Value Range
 Call the analogWrite function like in standard arduino framework:
 
 analogWrite(LED_BUILTIN, 255); // value range 0-255 so 255 = 100%
