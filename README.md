@@ -37,12 +37,7 @@ Call the analogWrite function like in standard arduino framework:
 ```cpp
 analogWrite(LED_BUILTIN, 255); // value range 0-255 so 255 = 100%
 ```
-## Custom Value Range
-You can also set the maximum value as third parameter:
 
-```cpp
-analogWrite(LED_BUILTIN, 255, 1023); // value range 0-1023 so 255 = 25%
-```
 ## Timer Resolution
 The default timer resolution is set to 13 bits in all the 16 channels, if you want to change that, use the analogWriteResolution function:
 ```cpp
