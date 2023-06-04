@@ -60,7 +60,7 @@ void analogWriteFrequency(uint32_t frequency) {
 }
 
 void analogWriteFrequency(uint8_t pin, uint32_t frequency) {
-  int channel = analogWriteChannel(pin);
+  uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
     _analog_write_channels[channel].frequency = frequency;  // max 80000000 / 2^bit_num
@@ -79,7 +79,7 @@ void analogWriteResolution(uint8_t resolution) {
 }
 
 void analogWriteResolution(uint8_t pin, uint8_t resolution) {
-  int channel = analogWriteChannel(pin);
+  uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
     if (resolution < 1) resolution = 1;
@@ -92,7 +92,7 @@ void analogWriteResolution(uint8_t pin, uint8_t resolution) {
 
 void analogWrite(uint8_t pin, uint32_t value) {
   // Get channel
-  int channel = analogWriteChannel(pin);
+  uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
     ledcWrite(channel, value);
@@ -101,7 +101,7 @@ void analogWrite(uint8_t pin, uint32_t value) {
 
 void analogServo(uint8_t pin, uint32_t value) {
   // Get channel
-  int channel = analogWriteChannel(pin);
+  uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
     // Set frequency and resolution
