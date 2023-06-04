@@ -7,7 +7,7 @@ typedef struct analog_write_channel
   uint8_t resolution;
 } analog_write_channel_t;
 
-int analogWriteChannel(uint8_t pin);
+uint8_t analogWriteChannel(uint8_t pin);
 
 void updatePins();
 
