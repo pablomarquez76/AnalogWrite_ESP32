@@ -7,16 +7,16 @@ typedef struct analog_write_channel
   uint8_t resolution;
 } analog_write_channel_t;
 
-uint8_t analogWriteChannel(uint8_t pin);
+uint8_t analogWriteChannel(int8_t pin);
 
 void updatePins();
 
 void analogWriteFrequency(uint32_t frequency);
-void analogWriteFrequency(uint8_t pin, uint32_t frequency);
+void analogWriteFrequency(int8_t pin, uint32_t frequency);
 
 void analogWriteResolution(uint8_t resolution);
-void analogWriteResolution(uint8_t pin, uint8_t resolution);
+void analogWriteResolution(int8_t pin, uint8_t resolution);
 
-void analogWrite(uint8_t pin, uint32_t value);
+void analogWrite(int8_t pin, uint32_t value);
 
-void analogServo(uint8_t pin, uint32_t value);
+void analogServo(int8_t pin, uint32_t value);
