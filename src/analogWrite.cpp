@@ -19,7 +19,7 @@ analog_write_channel_t _analog_write_channels[16] = {
   { -1, 5000, 8 }
 };
 
-uint8_t analogWriteChannel(uint8_t pin) {
+uint8_t analogWriteChannel(int8_t pin) {
   uint8_t channel = 16;
   // Check if pin already attached to a channel
   for (uint8_t i = 0; i < 16; i++) {
@@ -59,7 +59,7 @@ void analogWriteFrequency(uint32_t frequency) {
   updatePins();
 }
 
-void analogWriteFrequency(uint8_t pin, uint32_t frequency) {
+void analogWriteFrequency(int8_t pin, uint32_t frequency) {
   uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
@@ -78,7 +78,7 @@ void analogWriteResolution(uint8_t resolution) {
   updatePins();
 }
 
-void analogWriteResolution(uint8_t pin, uint8_t resolution) {
+void analogWriteResolution(int8_t pin, uint8_t resolution) {
   uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
@@ -90,7 +90,7 @@ void analogWriteResolution(uint8_t pin, uint8_t resolution) {
   }
 }
 
-void analogWrite(uint8_t pin, uint32_t value) {
+void analogWrite(int8_t pin, uint32_t value) {
   // Get channel
   uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
@@ -99,7 +99,7 @@ void analogWrite(uint8_t pin, uint32_t value) {
   }
 }
 
-void analogServo(uint8_t pin, uint32_t value) {
+void analogServo(int8_t pin, uint32_t value) {
   // Get channel
   uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
