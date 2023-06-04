@@ -2,21 +2,22 @@
     "name": "AnalogWrite_ESP32",
     "description": "Function analogWrite and Servo support for ESP32",
     "keywords": "ESP32, analogWrite, Servo, PWM",
-    "authors": [
-        {
+    "authors":
+     {
             "name": "Juan Pablo Marquez",
             "email": "pablo.marquez.dsc@gmail.com",
             "url": "https://github.com/pablomarquez76/AnalogWrite_ESP32",
             "maintainer": true
-        }
-    ],
-    "repository": {
+     },
+    "repository": 
+    {
         "type": "git",
          "url": "https://github.com/pablomarquez76/AnalogWrite_ESP32"
     },
     "version": "1.0.1",
     "homepage": "https://github.com/pablomarquez76/AnalogWrite_ESP32",
-    "frameworks": "Arduino",
+    "frameworks": "arduino",
+    "platforms": ["espressif32"],
     "examples": [
         "examples/*/*.ino"
     ]
