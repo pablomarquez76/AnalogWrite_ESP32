@@ -59,3 +59,4 @@ Servo signal is directly set using the following function:
 analogServo(2, 90) // Send 90 degrees signal to pin 2 (0 degrees = 600ms 180 degrees = 2400ms at 50Hz)
 analogServo(2, 500) // Send 500ms signal to pin 2 (if second argument > 200 then is converted to ms at 50Hz)
 ```
+ 
