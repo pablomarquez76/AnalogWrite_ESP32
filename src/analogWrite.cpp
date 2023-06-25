@@ -113,3 +113,21 @@ void analogServo(int8_t pin, uint32_t value) {
     }
   }
 }
+
+void tone(int8_t pin, uint32_t freq, uint32_t duration) {
+  // Get channel
+  uint8_t channel = analogWriteChannel(pin);
+  // Make sure the pin was attached to a channel, if not do nothing
+  if (channel < 16) {
+    // Set frequency and resolution
+    if (freq < 7800 && duration < 2000) {
+      uint32_t ms = millis();
+      ledcSetup(channel, freq, 10);
+      ledcWrite(channel, 511);
+      while (millis() - ms < duration) {
+        delay(1);
+      }
+      ledcWrite(channel, 0);
+    }
+  }
+}
