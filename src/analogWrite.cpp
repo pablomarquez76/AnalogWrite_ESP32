@@ -65,7 +65,6 @@ void analogWriteFrequency(int8_t pin, uint32_t frequency) {
   if (channel < 16) {
     _analog_write_channels[channel].frequency = frequency;  // max 80000000 / 2^bit_num
     ledcSetup(channel, _analog_write_channels[channel].frequency, _analog_write_channels[channel].resolution);
-    ledcAttachPin(pin, channel);
   }
 }
 
@@ -86,7 +85,6 @@ void analogWriteResolution(int8_t pin, uint8_t resolution) {
     else if (resolution > 16) resolution = 16;
     _analog_write_channels[channel].resolution = resolution;  // <=16
     ledcSetup(channel, _analog_write_channels[channel].frequency, _analog_write_channels[channel].resolution);
-    ledcAttachPin(pin, channel);
   }
 }
 
@@ -105,29 +103,57 @@ void analogServo(int8_t pin, uint32_t value) {
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
     // Set frequency and resolution
-    ledcSetup(channel, 50, 12);
+    if (_analog_write_channels[channel].frequency != 50 || _analog_write_channels[channel].resolution != 12) {
+      _analog_write_channels[channel].frequency = 50;
+      _analog_write_channels[channel].resolution = 12;
+      ledcSetup(channel, _analog_write_channels[channel].frequency, _analog_write_channels[channel].resolution);
+    }
     if (value < 200) {
       ledcWrite(channel, map(value, 0, 180, 123, 492));
     } else if (value < 4000) {
       ledcWrite(channel, map(value, 600, 2400, 123, 492));
+    } else {
+      ledcWrite(channel, 0);
     }
   }
 }
 
-void tone(int8_t pin, uint32_t freq, uint32_t duration) {
+void tone(int8_t pin, uint32_t freq) {
   // Get channel
   uint8_t channel = analogWriteChannel(pin);
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < 16) {
     // Set frequency and resolution
-    if (freq < 7800 && duration < 2000) {
+    if (freq < 7800) {  // max freq 7800Hz
+      ledcSetup(channel, freq, 10);
+      ledcWrite(channel, 511);
+    }
+  }
+}
+
+void tone(int8_t pin, uint32_t freq, uint32_t duration) {  // this is a blocking function
+  // Get channel
+  uint8_t channel = analogWriteChannel(pin);
+  // Make sure the pin was attached to a channel, if not do nothing
+  if (channel < 16) {
+    // Set frequency and resolution
+    if (freq < 7800 && duration < 2000) {  // max freq 7800Hz max duration 2000ms
       uint32_t ms = millis();
       ledcSetup(channel, freq, 10);
       ledcWrite(channel, 511);
-      while (millis() - ms < duration) {
-        delay(1);
-      }
+      while (millis() - ms < duration) delay(1);
       ledcWrite(channel, 0);
     }
+  }
+}
+
+void notone(int8_t pin) {
+  // Get channel
+  uint8_t channel = analogWriteChannel(pin);
+  // Make sure the pin was attached to a channel, if not do nothing
+  if (channel < 16) {
+    // Set frequency and resolution
+    ledcSetup(channel, 5000, 8);
+    ledcWrite(channel, 0);
   }
 }
