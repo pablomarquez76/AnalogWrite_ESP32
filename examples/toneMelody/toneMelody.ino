@@ -4,7 +4,7 @@
   More songs available at https://github.com/robsoncouto/arduino-songs
 
                                               Robson Couto, 2019
-  Modified to use ESP32 tone library
+  Modified to use ESP32 tone blocking library
 */
 
 #include <Arduino.h>
@@ -156,10 +156,6 @@ int wholenote = (60000 * 4) / tempo;
 int divider = 0, noteDuration = 0;
 
 void setup() {
-}
-
-void loop() {
-
   for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
     // calculates the duration of each note
     divider = melody[thisNote + 1];
@@ -173,4 +169,12 @@ void loop() {
     }
     tone(buzzer, melody[thisNote], noteDuration * 0.9);
   }
+  // Example of using tone without duration
+  tone(buzzer, 500);
+  delay(2000);
+  // Stop tone in pin buzzer
+  notone(buzzer);
+}
+
+void loop() {
 }
