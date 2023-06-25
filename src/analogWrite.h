@@ -20,3 +20,5 @@ void analogWriteResolution(int8_t pin, uint8_t resolution);
 void analogWrite(int8_t pin, uint32_t value);
 
 void analogServo(int8_t pin, uint32_t value);
+
+void tone(int8_t pin, uint32_t freq, uint32_t duration);
