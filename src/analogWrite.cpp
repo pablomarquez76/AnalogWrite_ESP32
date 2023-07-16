@@ -1,9 +1,21 @@
 #include "analogWrite.h"
 
+#define TONE_DUTY 511
+#define MAX_TONE_FREQ 7800
+#define MAX_TONE_DURATION 2000
+#define TONE_RESOLUTION 10
+
 #define NUM_CHANNELS 16
 #define MAX_RESOLUTION 16
 #define SERVO_FREQUENCY 50
 #define SERVO_RESOLUTION 12
+
+#define SERVO_MAX_ANGLE 180
+#define SERVO_MIN_TICKS 102
+#define SERVO_MAX_TICKS 512
+#define SERVO_MIN_PULSE_WIDTH 498
+#define SERVO_MAX_PULSE_WIDTH 2500
+#define SERVO_OVERFLOW_PULSE_WIDTH 4000
 
 analog_write_channel_t _analog_write_channels[NUM_CHANNELS] = {
   { -1, 5000, 8 },
@@ -113,10 +125,10 @@ void analogServo(int8_t pin, uint32_t value) {
       _analog_write_channels[channel].resolution = SERVO_RESOLUTION;
       ledcSetup(channel, _analog_write_channels[channel].frequency, _analog_write_channels[channel].resolution);
     }
-    if (value < 200) {
-      ledcWrite(channel, map(value, 0, 180, 123, 492));
-    } else if (value < 4000) {
-      ledcWrite(channel, map(value, 600, 2400, 123, 492));
+    if (value < SERVO_MAX_ANGLE + 1) {
+      ledcWrite(channel, map(value, 0, SERVO_MAX_ANGLE, SERVO_MIN_TICKS, SERVO_MAX_TICKS));  // 102:498ms 512:2500ms
+    } else if (value < SERVO_OVERFLOW_PULSE_WIDTH) {
+      ledcWrite(channel, map(value, SERVO_MIN_PULSE_WIDTH, SERVO_MAX_PULSE_WIDTH, SERVO_MIN_TICKS, SERVO_MAX_TICKS));  // map ms to ticks
     } else {
       ledcWrite(channel, 0);
     }
@@ -129,9 +141,9 @@ void tone(int8_t pin, uint32_t freq) {
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < NUM_CHANNELS) {
     // Set frequency and resolution
-    if (freq < 7800) {  // max freq 7800Hz
-      ledcSetup(channel, freq, 10);
-      ledcWrite(channel, 511);
+    if (freq < MAX_TONE_FREQ) {  // max freq 7800Hz
+      ledcSetup(channel, freq, TONE_RESOLUTION);
+      ledcWrite(channel, TONE_DUTY);
     }
   }
 }
@@ -142,10 +154,10 @@ void tone(int8_t pin, uint32_t freq, uint32_t duration) {  // this is a blocking
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < NUM_CHANNELS) {
     // Set frequency and resolution
-    if (freq < 7800 && duration < 2000) {  // max freq 7800Hz max duration 2000ms
+    if (freq < MAX_TONE_FREQ && duration < MAX_TONE_DURATION) {  // max freq 7800Hz max duration 2000ms
       uint32_t ms = millis();
-      ledcSetup(channel, freq, 10);
-      ledcWrite(channel, 511);
+      ledcSetup(channel, freq, TONE_RESOLUTION);
+      ledcWrite(channel, TONE_DUTY);
       while (millis() - ms < duration) delay(1);
       ledcWrite(channel, 0);
     }
@@ -158,7 +170,7 @@ void notone(int8_t pin) {
   // Make sure the pin was attached to a channel, if not do nothing
   if (channel < NUM_CHANNELS) {
     // Set frequency and resolution
-    ledcSetup(channel, 5000, 8);
+    ledcSetup(channel, 3000, TONE_RESOLUTION);
     ledcWrite(channel, 0);
   }
 }
