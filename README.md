@@ -60,11 +60,12 @@ analogServo(2, 90); // Sends 90 degrees signal to pin 2 (0 degrees = 600ms 180 d
 analogServo(2, 500); // Sends 500ms signal to pin 2 (if second argument > 200 then is converted to ms at 50Hz)
 analogServo(2, 4000); // If the second argument is greater or equal to 4000 detaches servo pin, in this case pin 2
 ```
- ## Tone
+## Tone
 Sends tone of a given frequency and duration to a pin:
 ```cpp
 tone(22, 500, 200); // Sends to pin 22 a 500Hz tone during 200ms
 tone(23, 1000); // Sends to pin 23 a 1000Hz tone
 notone(23); // kill tone in pin 23
 ```
-
+## Issues
+Since this library uses the ESP32 timers, when using different frequencies among the channels, there may appear some incompatibilities. To avoid this, you must assign the same frequencies to each of the 4 timers of the ESP32. For example: channels 0,1,8,9 use timer 0; therefore, these channels must have the same frequency. Same happens for channels 2,3,10,11 which use timer 1. Since the assignation of channels is ordered sequentially, each function must be initiated in a way that they use same timer for same frequency.
